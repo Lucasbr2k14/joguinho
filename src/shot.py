@@ -33,5 +33,5 @@ class Shot:
     def draw(self):
         if len(self.shots) > 0:
             for i in range(len(self.shots)):
-                draw.circle(self.screen, 'white', self.shots[i]["posi"], self.radius)
+                draw.circle(self.screen, "white", self.shots[i]["posi"], self.radius)
     
