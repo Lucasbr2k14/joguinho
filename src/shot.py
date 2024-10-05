@@ -28,12 +28,11 @@ class Shot:
        self.shots.pop(shot) 
 
     def check_condidion_of_existence(self):
-        
+
         for i in range(len(self.shots) - 1, -1, -1):
             condition = self.shots[i]["posi"][y] > 0 and self.shots[i]["posi"][y] < self.screen.get_height() and self.shots[i]["posi"][x] > 0 and self.shots[i]["posi"][x] < self.screen.get_width()
             if not condition:
                 self.destroy(i)
-                print(f"Destruindo a bola: {i}")
 
     def flight(self):
                 
