@@ -24,9 +24,6 @@ class Shot:
             "y_sum": cos * self.velocity,
         })
 
-    def destroy(self):
-        pass
-
     def flight(self):
         if len(self.shots) > 0:
             for i in range(len(self.shots)):
@@ -36,5 +33,5 @@ class Shot:
     def draw(self):
         if len(self.shots) > 0:
             for i in range(len(self.shots)):
-                draw.circle(self.screen, 0xffffff, self.shots[i]["posi"], self.radius)
+                draw.circle(self.screen, 'white', self.shots[i]["posi"], self.radius)
     
