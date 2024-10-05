@@ -6,7 +6,7 @@ from pygame import image, Surface
 class Player:
 
 
-    def __init__(self, screen:Surface,time):
+    def __init__(self, screen:Surface, time): # E porque o cooldown vira time?
 
         self.screen   = screen
         self.velocity = 2
@@ -16,7 +16,7 @@ class Player:
         self.pose     = 0
         self.player_looking = "down"
         self.load_visuals()
-        self.time=time
+        self.time = time
     
     
     def mcpose(self):
@@ -39,8 +39,8 @@ class Player:
         # self.sprites = transform.scale(self.sprites, (128,128))
     
     def shot(self):
-        #animações tiro
-        #retornar posição inicial do tiro
+        # Animações tiro
+        # Retornar posição inicial do tiro
         return (self.position[0]+8,self.position[1]+16)
     
 
@@ -53,7 +53,7 @@ class Player:
     def walk_down(self):
         if((self.position[1]) < (self.screen.get_height() - self.radius -16)):
             self.position[1] += self.velocity
-            if self.time<=0:
+            if self.time <= 0:
                 self.player_looking = "down"
 
 

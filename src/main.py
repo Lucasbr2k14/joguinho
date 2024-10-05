@@ -14,7 +14,7 @@ class Game:
         self.clock     = pg.time.Clock()
         
         
-        self.player = Player(self.screen,self.shot_cool)
+        self.player = Player(self.screen, self.shot_cool) # Porque passar o cooldawn para o player?
         self.shot   = Shot(self.screen)
         
         
@@ -85,5 +85,6 @@ class Game:
 
         pg.quit()
 
-
 Game()
+
+# Cooldawn do tiro tem que pertencer a classe do shot não a classe game.
