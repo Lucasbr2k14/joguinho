@@ -6,9 +6,17 @@ y = 1
 class Shot:
 
     def __init__(self, screen:Surface):
+<<<<<<< HEAD
         
         self.radius   = 5
         self.velocity = 4
+=======
+
+        self.radius        = 5
+        self.velocity      = 4
+        self.cooldown      = 3
+        self.cooldown_cout = 0
+>>>>>>> c7d9a81 (commit to pull)
         self.screen   = screen
         self.shots    = []
         
@@ -22,6 +30,7 @@ class Shot:
         
             self.next_shot = time + self.cooldown_time
 
+<<<<<<< HEAD
             hyp_len = pow(pow(player_pos[x] - mouse_pos[x], 2) + pow(player_pos[y] - mouse_pos[y], 2), 1/2) 
 
             sin = (mouse_pos[x] - player_pos[x]) / hyp_len
@@ -35,6 +44,8 @@ class Shot:
 
     def destroy(self, shot:int):
        self.shots.pop(shot) 
+=======
+>>>>>>> c7d9a81 (commit to pull)
 
     def check_condidion_of_existence(self):
 
@@ -65,7 +76,15 @@ class Shot:
 
 
     def draw(self):
+
         if len(self.shots) > 0:
             for i in range(len(self.shots)):
+<<<<<<< HEAD
                 draw.circle(self.screen, 0xFFFFFF, self.shots[i]["posi"], self.radius)
+=======
+                draw.circle(self.screen, "white", self.shots[i]["posi"], self.radius)
+    
+    def destroy(self, shot:int):
+        self.shots.pop(shot) 
+>>>>>>> c7d9a81 (commit to pull)
     
