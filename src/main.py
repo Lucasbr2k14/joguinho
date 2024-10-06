@@ -12,9 +12,9 @@ class Game:
         self.runing    = True
         self.shot_cool = 0
         self.clock     = pg.time.Clock()
+        self.time      = 0 
         
-        
-        self.player = Player(self.screen, self.shot_cool) # Porque passar o cooldawn para o player?
+        self.player = Player(self.screen) # Porque passar o cooldawn para o player?
         self.shot   = Shot(self.screen)
         
         
@@ -45,33 +45,27 @@ class Game:
         else:
             self.player.walking(False)
 
-
         self.screen.fill("black")
 
         if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
-            if self.shot_cool <= 0:
+            if self.shot.get_cooldown(self.time):
                 position_shot = self.player.shot()
-                self.shot.shot(position_shot, pg.mouse.get_pos())
+                self.shot.shot(position_shot, pg.mouse.get_pos(), self.time)
                 self.mouse_pressed = True
-                self.shot_cool = 3
-        else:
-            self.shot_cool -= 0.1
-
 
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
 
-
         self.shot.flight()
         self.shot.draw()
 
-
         self.player.mcpose()
-        self.player.draw(self.shot_cool)
+        self.player.draw(self.shot.get_cooldown(self.time))
+
 
         pg.display.flip()
-        self.clock.tick(60)
-
+        self.time += self.clock.tick(60)
+        
 
     def run(self):
 

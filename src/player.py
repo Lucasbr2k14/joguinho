@@ -6,7 +6,7 @@ from pygame import image, Surface
 class Player:
 
 
-    def __init__(self, screen:Surface, time): # E porque o cooldown vira time?
+    def __init__(self, screen:Surface): # E porque o cooldown vira time?
 
         self.screen   = screen
         self.velocity = 2
@@ -16,7 +16,6 @@ class Player:
         self.pose     = 0
         self.player_looking = "down"
         self.load_visuals()
-        self.time = time
     
     
     def mcpose(self):
@@ -75,8 +74,8 @@ class Player:
         self.walk = walk
 
 
-    def draw(self ,time):
-        if time <= 0:  
+    def draw(self, cooldown_shot:bool):
+        if cooldown_shot:  
             if self.player_looking == "right":
                 if self.walk:
                     self.screen.blit(self.sprites, self.position,[[256+16*(self.pose//1),0],[16,32]])
@@ -99,5 +98,6 @@ class Player:
                     self.screen.blit(self.sprites, self.position,[[0+16*(self.pose//1),0],[16,32]])
                 
         else:
-            self.screen.blit(self.sprites, self.position,[[0+16*((3-time)//1),32],[16,32]])
+            # self.screen.blit(self.sprites, self.position,[[0+16*((3-time)//1),32],[16,32]])
+            self.screen.blit(self.sprites, self.position,[[0+16*((3-0)//1),32],[16,32]])
             
