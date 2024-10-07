@@ -23,22 +23,23 @@ class Game:
         self.mouse_pressed = False
         self.run()
 
-
     def loop(self):
+
+        cooldown_shot = self.shot.get_cooldown(self.time)
 
         keys = pg.key.get_pressed()
         if self.shot_cool <= 0:
             if keys[pg.K_w]:
-                self.player.walk_up()
+                self.player.walk_up(cooldown_shot)
                 
             if keys[pg.K_s]:
-                self.player.walk_down()
+                self.player.walk_down(cooldown_shot)
 
             if keys[pg.K_d]:
-                self.player.walk_right()
+                self.player.walk_right(cooldown_shot)
                 
             if keys[pg.K_a]:
-                self.player.walk_left()
+                self.player.walk_left(cooldown_shot)
             
         if keys[pg.K_w] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_a]:
             self.player.walking(True)

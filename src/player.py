@@ -43,30 +43,31 @@ class Player:
         return (self.position[0]+8,self.position[1]+16)
     
 
-    def walk_up(self):
+    def walk_up(self, cooldown_shot:bool):
         if ((self.position[1]) > (0 + self.radius)): 
             self.position[1] -= self.velocity
-            self.player_looking = "up"
+            if cooldown_shot:
+                self.player_looking = "up"
 
 
-    def walk_down(self):
+    def walk_down(self, cooldown_shot:bool):
         if((self.position[1]) < (self.screen.get_height() - self.radius -16)):
             self.position[1] += self.velocity
-            if self.time <= 0:
+            if cooldown_shot:
                 self.player_looking = "down"
 
 
-    def walk_right(self):
+    def walk_right(self, cooldown_shot:bool):
         if((self.position[0]) < (self.screen.get_width() - self.radius-16)):
             self.position[0] += self.velocity
-            if self.time <= 0:
+            if cooldown_shot:
                 self.player_looking = "right"
 
 
-    def walk_left(self): 
+    def walk_left(self, cooldown_shot:bool): 
         if ((self.position[0]) > (0 + self.radius)):
             self.position[0] -= self.velocity
-            if self.time <= 0:
+            if cooldown_shot:
                 self.player_looking = "left"
     
 
