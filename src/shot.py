@@ -22,10 +22,10 @@ class Shot:
         
             self.next_shot = time + self.cooldown_time
 
-            hyp_len = pow(pow(player_pos[x] - mouse_pos[x], 2) + pow(player_pos[y] - mouse_pos[y], 2), 1/2) 
+            vec_len = abs(player_pos[x] - mouse_pos[x]) + abs(player_pos[y] - mouse_pos[y])
 
-            sin = (mouse_pos[x] - player_pos[x]) / hyp_len
-            cos = (player_pos[y] - mouse_pos[y]) / hyp_len
+            sin = (mouse_pos[x] - player_pos[x]) / vec_len
+            cos = (player_pos[y] - mouse_pos[y]) / vec_len
         
             self.shots.append({
                 "posi": [player_pos[x], player_pos[y]],

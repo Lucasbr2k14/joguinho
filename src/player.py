@@ -100,4 +100,3 @@ class Player:
                 
         else:
             self.screen.blit(self.sprites, self.position,[[0+16*((3-0)//1),32],[16,32]])
-            
