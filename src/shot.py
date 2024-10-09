@@ -12,7 +12,7 @@ class Shot:
         self.screen   = screen
         self.shots    = []
         
-        self.cooldown_time = 500
+        self.cooldown_time = 0
         self.next_shot     = 0
 
     def shot(self, player_pos:tuple, mouse_pos:tuple, time: int):
@@ -22,19 +22,18 @@ class Shot:
         
             self.next_shot = time + self.cooldown_time
 
-            vec_len = abs(player_pos[x] - mouse_pos[x]) + abs(player_pos[y] - mouse_pos[y])
+            vec_len = pow((player_pos[x] - mouse_pos[x])**2 + (player_pos[y] - mouse_pos[y])**2, 1/2)
 
             sin = (mouse_pos[x] - player_pos[x]) / vec_len
             cos = (player_pos[y] - mouse_pos[y]) / vec_len
-        
+
             self.shots.append({
                 "posi": [player_pos[x], player_pos[y]],
                 "x_sum": sin * self.velocity,
                 "y_sum": cos * self.velocity,
+                "color": self.color
             })
 
-    def destroy(self, shot:int):
-       self.shots.pop(shot) 
 
     def check_condidion_of_existence(self):
 
@@ -50,6 +49,13 @@ class Shot:
             if not condition:
                 self.destroy(i)
 
+
+    def destroy(self, shot:int):
+       self.shots.pop(shot) 
+
+    def get_cooldown(self, time:int):
+        return self.next_shot <= time
+    
     def flight(self):
                 
         if len(self.shots) > 0:
@@ -60,12 +66,9 @@ class Shot:
                 self.shots[i]["posi"][x] += self.shots[i]["x_sum"]
                 self.shots[i]["posi"][y] -= self.shots[i]["y_sum"]
 
-    def get_cooldown(self, time:int):
-        return self.next_shot <= time
-
     def draw(self):
 
         if len(self.shots) > 0:
             for i in range(len(self.shots)):
-                draw.circle(self.screen, 0xFFFFFF, self.shots[i]["posi"], self.radius)
+                draw.circle(self.screen, self.shots[i]["color"], (int(self.shots[i]["posi"][x]), int(self.shots[i]["posi"][y])), self.radius)
     
