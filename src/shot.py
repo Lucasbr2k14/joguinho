@@ -12,13 +12,13 @@ class Shot:
         self.screen   = screen
         self.shots    = []
         
-        self.cooldown_time = (1/2)*1000
+        self.cooldown_time = 1000
         self.next_shot     = 0
+        self.cooldown      = 0 
 
     def shot(self, player_pos:tuple, mouse_pos:tuple, time: int):
 
-
-        if self.next_shot <= time:
+        if self.get_cooldown():
         
             self.next_shot = time + self.cooldown_time
 
@@ -53,11 +53,15 @@ class Shot:
     def destroy(self, shot:int):
        self.shots.pop(shot) 
 
-    def get_cooldown(self, time:int):
+    def get_cooldown_frames(self, time:int):
         return self.next_shot <= time
     
+    def get_cooldown(self):
+            return self.cooldown <= 3
+
     def flight(self):
                 
+
         if len(self.shots) > 0:
             
             self.check_condidion_of_existence()
@@ -66,9 +70,10 @@ class Shot:
                 self.shots[i]["posi"][x] += self.shots[i]["x_sum"]
                 self.shots[i]["posi"][y] -= self.shots[i]["y_sum"]
 
-    def draw(self):
 
+    def draw(self):
+        
         if len(self.shots) > 0:
             for i in range(len(self.shots)):
-                draw.circle(self.screen, self.shots[i]["color"], (int(self.shots[i]["posi"][x]), int(self.shots[i]["posi"][y])), self.radius)
+                draw.circle(self.screen, self.shots[i]["color"], (self.shots[i]["posi"][x], self.shots[i]["posi"][y]), self.radius)
     

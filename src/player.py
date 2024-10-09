@@ -36,7 +36,8 @@ class Player:
     def load_visuals(self):
         self.sprites = image.load_extended("./Sprites/teste.png")
         # self.sprites = transform.scale(self.sprites, (128,128))
-    
+
+
     def shot(self):
         # Animações tiro
         # Retornar posição inicial do tiro
@@ -69,14 +70,15 @@ class Player:
             self.position[0] -= self.velocity
             if cooldown_shot:
                 self.player_looking = "left"
-    
+
 
     def walking(self, walk:bool):
         self.walk = walk
 
 
-    def draw(self, cooldown_shot:bool):
-        if cooldown_shot:  
+    def draw(self, cooldown_shot:bool, cooldown_frames:float):
+
+        if cooldown_frames <= 0:  
             if self.player_looking == "right":
                 if self.walk:
                     self.screen.blit(self.sprites, self.position,[[256+16*(self.pose//1),0],[16,32]])
@@ -99,4 +101,4 @@ class Player:
                     self.screen.blit(self.sprites, self.position,[[0+16*(self.pose//1),0],[16,32]])
                 
         else:
-            self.screen.blit(self.sprites, self.position,[[0+16*((3-0)//1),32],[16,32]])
+            self.screen.blit(self.sprites, self.position,[[0+16*((3-cooldown_frames)//1),32],[16,32]])

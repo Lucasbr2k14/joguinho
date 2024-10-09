@@ -1,6 +1,7 @@
 import pygame as pg
 from player import Player
 from shot import Shot
+from hud import Hud
 
 class Game:
 
@@ -14,8 +15,10 @@ class Game:
         self.clock     = pg.time.Clock()
         self.time      = 0 
         
-        self.player = Player(self.screen) # Porque passar o cooldawn para o player?
+        
+        self.player = Player(self.screen) 
         self.shot   = Shot(self.screen)
+        self.hud    = Hud(self.screen)
         
         
         # pg.display.toggle_fullscreen()
@@ -25,10 +28,14 @@ class Game:
 
     def loop(self):
 
-        cooldown_shot = self.shot.get_cooldown(self.time)
+        
+        self.screen.fill("black")
+
+        cooldown_shot = self.shot.get_cooldown()
 
         keys = pg.key.get_pressed()
-        if self.shot_cool <= 0:
+
+        if self.shot.cooldown <= 0:
             if keys[pg.K_w]:
                 self.player.walk_up(cooldown_shot)
                 
@@ -46,25 +53,33 @@ class Game:
         else:
             self.player.walking(False)
 
-        self.screen.fill("black")
-
         if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
-            if self.shot.get_cooldown(self.time):
-                position_shot = self.player.shot()
-                self.shot.shot(position_shot, pg.mouse.get_pos(), self.time)
-                self.mouse_pressed = True
+            if self.hud.return_mana() >= 10:
+                if self.shot.cooldown <= 0:
+                    position_shot = self.player.shot()
+                    self.shot.shot(position_shot, pg.mouse.get_pos(), self.time)
+                    self.mouse_pressed = True
+                    self.shot.cooldown = 3
+                    self.hud.new_mana()
+        else:
+            self.shot.cooldown -= 0.1
+
 
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
 
         self.shot.flight()
         self.shot.draw()
-
+        
         self.player.mcpose()
-        self.player.draw(self.shot.get_cooldown(self.time))
 
+        self.player.draw(cooldown_shot, self.shot.cooldown)
+        self.hud.draw()
+
+        self.hud.recharge_mana()
 
         pg.display.flip()
+
         self.time += self.clock.tick(60)
         
 
@@ -81,5 +96,3 @@ class Game:
         pg.quit()
 
 Game()
-
-# Cooldawn do tiro tem que pertencer a classe do shot não a classe game.
