@@ -1,7 +1,7 @@
 import pygame as pg
 from player import Player
 from shot import Shot
-from HUD import HUD
+from hud import Hud
 
 class Game:
 
@@ -17,7 +17,7 @@ class Game:
         
         self.player = Player(self.screen) 
         self.shot   = Shot(self.screen)
-        self.HUD    = HUD(self.screen)
+        self.hud    = Hud(self.screen)
         
         
         # pg.display.toggle_fullscreen()
@@ -51,13 +51,13 @@ class Game:
         self.screen.fill("black")
 
         if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
-            if self.HUD.return_mana()>=10:
+            if self.hud.return_mana()>=10:
                 if self.shot_cool <= 0:
                     position_shot = self.player.shot()
                     self.shot.shot(position_shot, pg.mouse.get_pos())
                     self.mouse_pressed = True
                     self.shot_cool = 3
-                    self.HUD.new_mana()
+                    self.hud.new_mana()
         else:
             self.shot_cool -= 0.1
 
@@ -72,8 +72,8 @@ class Game:
 
         self.player.mcpose()
         self.player.draw(self.shot_cool)
-        self.HUD.draw()
-        self.HUD.recharge_mana()
+        self.hud.draw()
+        self.hud.recharge_mana()
         pg.display.flip()
         self.clock.tick(60)
 
