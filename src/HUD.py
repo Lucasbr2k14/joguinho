@@ -2,11 +2,11 @@ from pygame import Surface,draw,image
 
 class Hud:
 
-    def __init__(self,surface:Surface):
+    def __init__(self , surface:Surface):
 
         self.mana = 100
         self.life = 100
-        self.surface=surface
+        self.surface = surface
         
         self.mana = 100
         self.life = 100
