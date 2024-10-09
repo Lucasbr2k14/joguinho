@@ -2,7 +2,7 @@ from pygame import Surface,draw,image
 class HUD:
     def __init__(self,surface:Surface):
         self.mana=100
-        self.vida=50
+        self.life=100
         self.surface=surface
         self.load_visuals()
         
@@ -10,8 +10,10 @@ class HUD:
         self.sprites = image.load_extended("./Sprites/teste.png")
         
     def draw(self):
-        draw.rect(self.surface,'blue',[(0,0),(self.mana,16)])
+        draw.rect(self.surface,'red',[(0,0),(self.life,16)])
+        draw.rect(self.surface,'blue',[(0,18),(self.mana,16)])
         self.surface.blit(self.sprites,[0,0],[[0,432],[101,16]])
+        self.surface.blit(self.sprites,[0,18],[[0,432],[101,16]])
         
     def new_mana(self):
         self.mana-=10
