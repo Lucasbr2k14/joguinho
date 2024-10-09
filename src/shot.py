@@ -12,7 +12,7 @@ class Shot:
         self.screen   = screen
         self.shots    = []
         
-        self.cooldown_time = 0
+        self.cooldown_time = (1/2)*1000
         self.next_shot     = 0
 
     def shot(self, player_pos:tuple, mouse_pos:tuple, time: int):
@@ -31,7 +31,7 @@ class Shot:
                 "posi": [player_pos[x], player_pos[y]],
                 "x_sum": sin * self.velocity,
                 "y_sum": cos * self.velocity,
-                "color": self.color
+                "color": 0xffffff
             })
 
 
