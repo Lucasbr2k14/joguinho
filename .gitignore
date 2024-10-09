@@ -3,3 +3,8 @@ Lib
 Scripts
 src/__pycache__
 pyvenv.cfg
+
+bin
+include
+lib
+lib64

@@ -6,7 +6,7 @@ from pygame import image, Surface
 class Player:
 
 
-    def __init__(self, screen:Surface):
+    def __init__(self, screen:Surface): # E porque o cooldown vira time?
 
         self.screen   = screen
         self.velocity = 2
@@ -16,7 +16,6 @@ class Player:
         self.pose     = 0
         self.player_looking = "down"
         self.load_visuals()
-
     
     
     def mcpose(self):
@@ -37,43 +36,49 @@ class Player:
     def load_visuals(self):
         self.sprites = image.load_extended("./Sprites/teste.png")
         # self.sprites = transform.scale(self.sprites, (128,128))
-    
+
+
     def shot(self):
         # Animações tiro
         # Retornar posição inicial do tiro
         return (self.position[0]+8,self.position[1]+16)
     
 
-    def walk_up(self):
+    def walk_up(self, cooldown_shot:bool):
         if ((self.position[1]) > (0 + self.radius)): 
             self.position[1] -= self.velocity
-            self.player_looking = "up"
+            if cooldown_shot:
+                self.player_looking = "up"
 
 
-    def walk_down(self):
+    def walk_down(self, cooldown_shot:bool):
         if((self.position[1]) < (self.screen.get_height() - self.radius -16)):
             self.position[1] += self.velocity
-            self.player_looking = "down"
+            if cooldown_shot:
+                self.player_looking = "down"
 
 
-    def walk_right(self):
+    def walk_right(self, cooldown_shot:bool):
         if((self.position[0]) < (self.screen.get_width() - self.radius-16)):
             self.position[0] += self.velocity
-            self.player_looking = "right"
+            if cooldown_shot:
+                self.player_looking = "right"
 
 
-    def walk_left(self): 
+    def walk_left(self, cooldown_shot:bool): 
         if ((self.position[0]) > (0 + self.radius)):
             self.position[0] -= self.velocity
-            self.player_looking = "left"
-    
+            if cooldown_shot:
+                self.player_looking = "left"
+
 
     def walking(self, walk:bool):
         self.walk = walk
 
 
-    def draw(self ,cooldown):
-        if cooldown <= 0:  
+    def draw(self, cooldown_shot:bool, cooldown_frames:float):
+
+        if cooldown_frames <= 0:  
             if self.player_looking == "right":
                 if self.walk:
                     self.screen.blit(self.sprites, self.position,[[256+16*(self.pose//1),0],[16,32]])
@@ -96,5 +101,4 @@ class Player:
                     self.screen.blit(self.sprites, self.position,[[0+16*(self.pose//1),0],[16,32]])
                 
         else:
-            self.screen.blit(self.sprites, self.position,[[0+16*((3-cooldown)//1),32],[16,32]])
-            
+            self.screen.blit(self.sprites, self.position,[[0+16*((3-cooldown_frames)//1),32],[16,32]])

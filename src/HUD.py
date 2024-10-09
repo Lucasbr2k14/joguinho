@@ -7,6 +7,10 @@ class Hud:
         self.mana = 100
         self.life = 100
         self.surface=surface
+        
+        self.mana = 100
+        self.life = 100
+        self.surface = surface
         self.load_visuals()
         
     def load_visuals(self):
@@ -18,6 +22,7 @@ class Hud:
         self.surface.blit(self.sprites,[0,0],[[0,432],[101,16]])
         self.surface.blit(self.sprites,[0,18],[[0,432],[101,16]])
         
+
     def new_mana(self):
         self.mana -= 10
     
