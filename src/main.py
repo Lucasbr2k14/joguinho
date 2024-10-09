@@ -1,6 +1,7 @@
 import pygame as pg
 from player import Player
 from shot import Shot
+from HUD import HUD
 
 class Game:
 
@@ -14,8 +15,9 @@ class Game:
         self.clock     = pg.time.Clock()
         
         
-        self.player = Player(self.screen, self.shot_cool) # Porque passar o cooldawn para o player?
+        self.player = Player(self.screen) 
         self.shot   = Shot(self.screen)
+        self.HUD    = HUD(self.screen)
         
         
         # pg.display.toggle_fullscreen()
@@ -49,11 +51,13 @@ class Game:
         self.screen.fill("black")
 
         if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
-            if self.shot_cool <= 0:
-                position_shot = self.player.shot()
-                self.shot.shot(position_shot, pg.mouse.get_pos())
-                self.mouse_pressed = True
-                self.shot_cool = 3
+            if self.HUD.return_mana()>=10:
+                if self.shot_cool <= 0:
+                    position_shot = self.player.shot()
+                    self.shot.shot(position_shot, pg.mouse.get_pos())
+                    self.mouse_pressed = True
+                    self.shot_cool = 3
+                    self.HUD.new_mana()
         else:
             self.shot_cool -= 0.1
 
@@ -68,7 +72,8 @@ class Game:
 
         self.player.mcpose()
         self.player.draw(self.shot_cool)
-
+        self.HUD.draw()
+        self.HUD.recharge_mana()
         pg.display.flip()
         self.clock.tick(60)
 
@@ -86,5 +91,3 @@ class Game:
         pg.quit()
 
 Game()
-
-# Cooldawn do tiro tem que pertencer a classe do shot não a classe game.

@@ -13,10 +13,10 @@ class Shot:
 
     def shot(self, player_pos:tuple, mouse_pos:tuple):
 
-        hip_len  = pow(pow(player_pos[x] - mouse_pos[x], 2) + pow(player_pos[y] - mouse_pos[y], 2), 1/2) 
-
+        hip_len  = abs(mouse_pos[x] - player_pos[x]) + abs(player_pos[y] - mouse_pos[y])
+        
         sin = (mouse_pos[x] - player_pos[x])/hip_len
-        cos = (player_pos[y] - mouse_pos[y])/hip_len
+        cos = (mouse_pos[y] - player_pos[y])/hip_len
     
         self.shots.append({
             "posi": [player_pos[x], player_pos[y]],
@@ -28,7 +28,7 @@ class Shot:
         if len(self.shots) > 0:
             for i in range(len(self.shots)):
                 self.shots[i]["posi"][x] += self.shots[i]["x_sum"]
-                self.shots[i]["posi"][y] -= self.shots[i]["y_sum"]
+                self.shots[i]["posi"][y] += self.shots[i]["y_sum"]
 
     def draw(self):
         if len(self.shots) > 0:

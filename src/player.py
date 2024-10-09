@@ -6,7 +6,7 @@ from pygame import image, Surface
 class Player:
 
 
-    def __init__(self, screen:Surface, time): # E porque o cooldown vira time?
+    def __init__(self, screen:Surface):
 
         self.screen   = screen
         self.velocity = 2
@@ -16,7 +16,7 @@ class Player:
         self.pose     = 0
         self.player_looking = "down"
         self.load_visuals()
-        self.time = time
+
     
     
     def mcpose(self):
@@ -53,30 +53,27 @@ class Player:
     def walk_down(self):
         if((self.position[1]) < (self.screen.get_height() - self.radius -16)):
             self.position[1] += self.velocity
-            if self.time <= 0:
-                self.player_looking = "down"
+            self.player_looking = "down"
 
 
     def walk_right(self):
         if((self.position[0]) < (self.screen.get_width() - self.radius-16)):
             self.position[0] += self.velocity
-            if self.time <= 0:
-                self.player_looking = "right"
+            self.player_looking = "right"
 
 
     def walk_left(self): 
         if ((self.position[0]) > (0 + self.radius)):
             self.position[0] -= self.velocity
-            if self.time <= 0:
-                self.player_looking = "left"
+            self.player_looking = "left"
     
 
     def walking(self, walk:bool):
         self.walk = walk
 
 
-    def draw(self ,time):
-        if time <= 0:  
+    def draw(self ,cooldown):
+        if cooldown <= 0:  
             if self.player_looking == "right":
                 if self.walk:
                     self.screen.blit(self.sprites, self.position,[[256+16*(self.pose//1),0],[16,32]])
@@ -99,5 +96,5 @@ class Player:
                     self.screen.blit(self.sprites, self.position,[[0+16*(self.pose//1),0],[16,32]])
                 
         else:
-            self.screen.blit(self.sprites, self.position,[[0+16*((3-time)//1),32],[16,32]])
+            self.screen.blit(self.sprites, self.position,[[0+16*((3-cooldown)//1),32],[16,32]])
             
