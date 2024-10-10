@@ -2,6 +2,7 @@ import pygame as pg
 from player import Player
 from shot import Shot
 from hud import Hud
+from titlemap import TileMap
 
 class Game:
 
@@ -16,10 +17,10 @@ class Game:
         self.time      = 0 
         
         
-        self.player = Player(self.screen) 
-        self.shot   = Shot(self.screen)
-        self.hud    = Hud(self.screen)
-        
+        self.player  = Player(self.screen)
+        self.shot    = Shot(self.screen)
+        self.hud     = Hud(self.screen)
+        self.titlemap= TileMap(self.screen) 
         
         # pg.display.toggle_fullscreen()
 
@@ -29,7 +30,7 @@ class Game:
     def loop(self):
 
         
-        self.screen.fill("black")
+        # self.screen.fill("black")
 
         cooldown_shot = self.shot.get_cooldown()
 
@@ -67,6 +68,10 @@ class Game:
 
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
+
+
+        self.titlemap.draw()
+
 
         self.shot.flight()
         self.shot.draw()

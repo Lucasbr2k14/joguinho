@@ -3,6 +3,9 @@ from pygame import image, Surface
 
 # Tamnho 14X26
 
+x = 0
+y = 1
+
 class Player:
 
 
@@ -41,33 +44,33 @@ class Player:
     def shot(self):
         # Animações tiro
         # Retornar posição inicial do tiro
-        return (self.position[0]+8,self.position[1]+16)
+        return (self.position[x]+8,self.position[y]+16)
     
 
     def walk_up(self, cooldown_shot:bool):
-        if ((self.position[1]) > (0 + self.radius)): 
-            self.position[1] -= self.velocity
+        if ((self.position[y]) > (0 + self.radius)): 
+            self.position[y] -= self.velocity
             if cooldown_shot:
                 self.player_looking = "up"
 
 
     def walk_down(self, cooldown_shot:bool):
-        if((self.position[1]) < (self.screen.get_height() - self.radius -16)):
-            self.position[1] += self.velocity
+        if((self.position[y]) < (self.screen.get_height() - self.radius -16)):
+            self.position[y] += self.velocity
             if cooldown_shot:
                 self.player_looking = "down"
 
 
     def walk_right(self, cooldown_shot:bool):
-        if((self.position[0]) < (self.screen.get_width() - self.radius-16)):
-            self.position[0] += self.velocity
+        if((self.position[x]) < (self.screen.get_width() - self.radius-16)):
+            self.position[x] += self.velocity
             if cooldown_shot:
                 self.player_looking = "right"
 
 
     def walk_left(self, cooldown_shot:bool): 
-        if ((self.position[0]) > (0 + self.radius)):
-            self.position[0] -= self.velocity
+        if ((self.position[x]) > (0 + self.radius)):
+            self.position[x] -= self.velocity
             if cooldown_shot:
                 self.player_looking = "left"
 
