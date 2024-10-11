@@ -38,7 +38,8 @@ class TileMap:
 
     def cache_tilemap(self):
         for i in range(201):
-            tile_x = 16 * self.mul * i % 320
+
+            tile_x = 16 * self.mul * i % (320 * self.mul)
             tile_y = i // 20 * 16 * self.mul
             rect = ((tile_x, tile_y),(16*self.mul,16*self.mul))
             self.tile.append(rect)
