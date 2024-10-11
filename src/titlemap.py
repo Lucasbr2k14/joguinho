@@ -12,9 +12,14 @@ class TileMap:
         self.matrix = []
         self.tile   = []
 
+        self.map_surface = Surface(screen.get_size())
+
+
         self.load_visuals()
         self.load_map()
         self.cache_tilemap()
+        self.generate_surface()
+
 
     def load_visuals(self):
         self.visuals = image.load_extended("./Sprites/land.png")
@@ -32,18 +37,20 @@ class TileMap:
                 self.matrix.append(linha)
 
     def cache_tilemap(self):
-        for i in range(400+1):
+        for i in range(201):
             tile_x = 16 * self.mul * i % 320
             tile_y = i // 20 * 16 * self.mul
             rect = ((tile_x, tile_y),(16*self.mul,16*self.mul))
             self.tile.append(rect)
 
+    def generate_surface(self):
+        tile_size = self.len*self.mul        
+        for l in range(len(self.matrix)):
+            for c in range(len(self.matrix[0])):
+                x = c * tile_size
+                y = l * tile_size
+                index_tile = self.matrix[l][c]
+                self.map_surface.blit(self.visuals, (x, y), self.tile[index_tile])
+
     def draw(self):
-        tile_size = self.len*self.mul
-        for i in range(len(self.matrix) * len(self.matrix[0])):
-            l = i // 20
-            c = i % 20
-            x = c * tile_size
-            y = l * tile_size
-            index_tile = self.matrix[l][c]
-            self.screen.blit(self.visuals, (x, y), self.tile[index_tile])
+        self.screen.blit(self.map_surface, (0,0))
