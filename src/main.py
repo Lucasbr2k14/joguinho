@@ -70,18 +70,18 @@ class Game:
             self.mouse_pressed = False
 
 
+        self.titlemap.draw()
 
 
         self.shot.flight()
+        self.shot.draw()
         
         self.player.mcpose()
-        self.hud.recharge_mana()
 
-
-        self.titlemap.draw()
-        self.shot.draw()
         self.player.draw(cooldown_shot, self.shot.cooldown)
         self.hud.draw()
+
+        self.hud.recharge_mana()
 
         pg.display.flip()
 
