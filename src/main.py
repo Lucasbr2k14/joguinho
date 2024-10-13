@@ -75,10 +75,8 @@ class Game:
 
         self.shot.flight()
         self.shot.draw()
-        
-        self.player.mcpose()
 
-        self.player.draw(cooldown_shot, self.shot.cooldown)
+        self.player.draw(self.shot.cooldown)
         self.hud.draw()
 
         self.hud.recharge_mana()

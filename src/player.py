@@ -1,5 +1,5 @@
  
-from pygame import image, Surface
+from pygame import image, Surface, transform
 
 # Tamnho 14X26
 
@@ -11,13 +11,16 @@ class Player:
 
     def __init__(self, screen:Surface): # E porque o cooldown vira time?
 
-        self.screen   = screen
-        self.velocity = 2
-        self.position = [screen.get_width()/2, screen.get_height()/2]
-        self.radius   = 0
-        self.walk     = False
-        self.pose     = 0
+        self.screen      = screen
+        self.velocity    = 2
+        self.position    = [screen.get_width()/2, screen.get_height()/2]
+        self.radius      = 0
+        self.walk        = False
+        self.pose        = 0
         self.player_looking = "down"
+        
+        self.scale_factor= 2
+        self.sprite_sheet_size = (448,448)
         self.load_visuals()
     
     
@@ -25,26 +28,26 @@ class Player:
         
         if self.walk:
             if self.player_looking == "up" or self.player_looking == "down":
-                self.pose += 0.1
+                self.pose += 100
             else:
-                self.pose += 0.05
+                self.pose += 50
             
         else:
-            self.pose += 0.025
+            self.pose += 25
             
-        if self.pose >= 4:
+        if self.pose >= 4000:
             self.pose = 0
 
-
     def load_visuals(self):
+        scale = (self.sprite_sheet_size[0]*self.scale_factor,self.sprite_sheet_size[1]*self.scale_factor)
         self.sprites = image.load_extended("./Sprites/teste.png")
-        # self.sprites = transform.scale(self.sprites, (128,128))
+        self.sprites = transform.scale(self.sprites, scale)
 
 
     def shot(self):
         # Animações tiro
         # Retornar posição inicial do tiro
-        return (self.position[x]+8,self.position[y]+16)
+        return (self.position[x]+8,(self.position[y]+16))
     
 
     def walk_up(self, cooldown_shot:bool):
@@ -79,29 +82,33 @@ class Player:
         self.walk = walk
 
 
-    def draw(self, cooldown_shot:bool, cooldown_frames:float):
+    def draw(self, cooldown_frames:float):
+
+        self.mcpose()
 
         if cooldown_frames <= 0:  
             if self.player_looking == "right":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[256+16*(self.pose//1),0],[16,32]])
+                   position = [(256+16*(self.pose//1000))*self.scale_factor,0]
                 else:
-                    self.screen.blit(self.sprites, self.position,[[192+16*(self.pose//1),0],[16,32]])
+                   position = [(192+16*(self.pose//1000))*self.scale_factor,0]
             if  self.player_looking == "left":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[368+16+16*(self.pose//1),0],[16,32]])
+                   position = [(368+16+16*(self.pose//1000))*self.scale_factor,0]
                 else:
-                    self.screen.blit(self.sprites, self.position,[[288+32+16*(self.pose//1),0],[16,32]])
+                   position = [(288+32+16*(self.pose//1000))*self.scale_factor,0]
             if  self.player_looking == "up":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[160+16*(self.pose//2),0],[16,32]])
+                   position = [(160+16*(self.pose//2000))*self.scale_factor,0]
                 else:
-                    self.screen.blit(self.sprites, self.position,[[96+16*(self.pose//1),0],[16,32]])
+                   position = [(96+16*(self.pose//1000))*self.scale_factor,0]
             if  self.player_looking == "down":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[64+16*(self.pose//2),0],[16,32]])
+                   position = [(64+16*(self.pose//2000))*self.scale_factor,0]
                 else:
-                    self.screen.blit(self.sprites, self.position,[[0+16*(self.pose//1),0],[16,32]])
+                   position = [(0+16*(self.pose//1000))*self.scale_factor,0]
                 
         else:
-            self.screen.blit(self.sprites, self.position,[[0+16*((3-cooldown_frames)//1),32],[16,32]])
+           position = [(0+16*((3-cooldown_frames)//1))*self.scale_factor,32*self.scale_factor]
+
+        self.screen.blit(self.sprites, self.position,[position,[16*self.scale_factor,32*self.scale_factor]])
