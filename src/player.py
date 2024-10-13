@@ -25,16 +25,15 @@ class Player:
         
         if self.walk:
             if self.player_looking == "up" or self.player_looking == "down":
-                self.pose += 0.1
+                self.pose += 100
             else:
-                self.pose += 0.05
+                self.pose += 50
             
         else:
-            self.pose += 0.025
+            self.pose += 25
             
-        if self.pose >= 4:
+        if self.pose >= 4000:
             self.pose = 0
-
 
     def load_visuals(self):
         self.sprites = image.load_extended("./Sprites/teste.png")
@@ -79,29 +78,31 @@ class Player:
         self.walk = walk
 
 
-    def draw(self, cooldown_shot:bool, cooldown_frames:float):
+    def draw(self, cooldown_frames:float):
+
+        self.mcpose()
 
         if cooldown_frames <= 0:  
             if self.player_looking == "right":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[256+16*(self.pose//1),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[256+16*(self.pose//1000),0],[16,32]])
                 else:
-                    self.screen.blit(self.sprites, self.position,[[192+16*(self.pose//1),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[192+16*(self.pose//1000),0],[16,32]])
             if  self.player_looking == "left":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[368+16+16*(self.pose//1),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[368+16+16*(self.pose//1000),0],[16,32]])
                 else:
-                    self.screen.blit(self.sprites, self.position,[[288+32+16*(self.pose//1),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[288+32+16*(self.pose//1000),0],[16,32]])
             if  self.player_looking == "up":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[160+16*(self.pose//2),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[160+16*(self.pose//2000),0],[16,32]])
                 else:
-                    self.screen.blit(self.sprites, self.position,[[96+16*(self.pose//1),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[96+16*(self.pose//1000),0],[16,32]])
             if  self.player_looking == "down":
                 if self.walk:
-                    self.screen.blit(self.sprites, self.position,[[64+16*(self.pose//2),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[64+16*(self.pose//2000),0],[16,32]])
                 else:
-                    self.screen.blit(self.sprites, self.position,[[0+16*(self.pose//1),0],[16,32]])
+                    self.screen.blit(self.sprites, self.position,[[0+16*(self.pose//1000),0],[16,32]])
                 
         else:
             self.screen.blit(self.sprites, self.position,[[0+16*((3-cooldown_frames)//1),32],[16,32]])
