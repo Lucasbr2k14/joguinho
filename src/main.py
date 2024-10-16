@@ -36,23 +36,33 @@ class Game:
 
         keys = pg.key.get_pressed()
 
+        self.player.walking(False)
         if self.shot.cooldown <= 0:
             if keys[pg.K_w]:
-                self.player.walk_up(cooldown_shot)
+                if not keys[pg.K_s]:
+                    self.player.walk_up(cooldown_shot)
+                    self.player.walking(True)
                 
             if keys[pg.K_s]:
-                self.player.walk_down(cooldown_shot)
+                if not keys[pg.K_w]:
+                    self.player.walk_down(cooldown_shot)
+                    self.player.walking(True)
 
-            if keys[pg.K_d]:
-                self.player.walk_right(cooldown_shot)
+            if keys[pg.K_d]:  
+                if not keys[pg.K_a]:
+                    self.player.walk_right(cooldown_shot)
+                    self.player.walking(True)
                 
             if keys[pg.K_a]:
-                self.player.walk_left(cooldown_shot)
-            
-        if keys[pg.K_w] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_a]:
-            self.player.walking(True)
-        else:
-            self.player.walking(False)
+                if not keys[pg.K_d]:
+                    self.player.walk_left(cooldown_shot)
+                    self.player.walking(True)
+
+            if ((keys[pg.K_w] or keys[pg.K_s]) and keys[pg.K_a]) or ((keys[pg.K_w] or keys[pg.K_s]) and keys[pg.K_d]):
+                self.player.velocity = 1.5
+            else:
+                self.player.velocity = 2
+
 
         if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
             if self.hud.return_mana() >= 10:
