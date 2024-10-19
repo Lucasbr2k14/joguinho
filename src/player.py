@@ -50,29 +50,38 @@ class Player:
         return (self.position[x]+8,(self.position[y]+16))
     
 
+    def get_hitbox(self):
+        return ( 
+            (self.position[x]+(2*self.scale_factor), self.position[y]+(18*self.scale_factor)),
+
+
+            (self.position[x]+(14*self.scale_factor), self.position[y]+(32*self.scale_factor))
+        )
+
+
     def walk_up(self, cooldown_shot:bool):
-        if ((self.position[y]) > (0 + self.radius)): 
+        if ((self.position[y]) > (0 + self.radius)) or True: 
             self.position[y] -= self.velocity
             if cooldown_shot:
                 self.player_looking = "up"
 
 
     def walk_down(self, cooldown_shot:bool):
-        if((self.position[y]) < (self.screen.get_height() - self.radius -16)):
+        if((self.position[y]) < (self.screen.get_height() - self.radius -16)) or True:
             self.position[y] += self.velocity
             if cooldown_shot:
                 self.player_looking = "down"
 
 
     def walk_right(self, cooldown_shot:bool):
-        if((self.position[x]) < (self.screen.get_width() - self.radius-16)):
+        if((self.position[x]) < (self.screen.get_width() - self.radius-16)) or True:
             self.position[x] += self.velocity
             if cooldown_shot:
                 self.player_looking = "right"
 
 
     def walk_left(self, cooldown_shot:bool): 
-        if ((self.position[x]) > (0 + self.radius)):
+        if ((self.position[x]) > (0 + self.radius)) or True:
             self.position[x] -= self.velocity
             if cooldown_shot:
                 self.player_looking = "left"

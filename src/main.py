@@ -3,7 +3,7 @@ from player import Player
 from shot import Shot
 from hud import Hud
 from titlemap import TileMap
-
+from collision import Collision
 class Game:
 
 
@@ -21,7 +21,9 @@ class Game:
         self.shot    = Shot(self.screen)
         self.hud     = Hud(self.screen)
         self.titlemap= TileMap(self.screen) 
-        
+        self.collision = Collision(self.screen)
+
+
         # pg.display.toggle_fullscreen()
 
         self.mouse_pressed = False
@@ -31,6 +33,7 @@ class Game:
 
         
         # self.screen.fill("black")
+
 
         cooldown_shot = self.shot.get_cooldown()
 
@@ -86,11 +89,14 @@ class Game:
         self.shot.flight()
         self.shot.draw()
 
+        print(f"{self.player.position}",end="\r")
+
         self.player.draw(self.shot.cooldown)
         self.hud.draw()
 
         self.hud.recharge_mana()
 
+        self.collision.test_player(self.player.get_hitbox())
         pg.display.flip()
 
         self.time += self.clock.tick(60)
