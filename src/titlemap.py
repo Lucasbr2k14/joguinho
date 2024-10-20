@@ -21,7 +21,6 @@ class TileMap:
         self.visuals = image.load_extended("./Sprites/land.png")
         self.visuals = transform.scale(self.visuals, (320*self.scale_factor,320*self.scale_factor))
     
-    
     def load_map(self):
         with open("./maps/map1.csv") as file:
             for linha in file:
@@ -47,5 +46,9 @@ class TileMap:
                 index_tile = self.matrix[l][c]
                 self.map_surface.blit(self.visuals, (x, y), self.tile[index_tile])
    
+
+    def generate_collisions(self):
+        pass
+
     def draw(self):
         self.screen.blit(self.map_surface, (0,0))

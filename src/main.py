@@ -1,9 +1,11 @@
 import pygame as pg
+
 from player import Player
 from shot import Shot
 from hud import Hud
 from titlemap import TileMap
 from collision import Collision
+
 class Game:
 
 
@@ -17,23 +19,17 @@ class Game:
         self.time      = 0 
         
         
-        self.player  = Player(self.screen)
-        self.shot    = Shot(self.screen)
-        self.hud     = Hud(self.screen)
-        self.titlemap= TileMap(self.screen) 
+        self.player    = Player(self.screen)
+        self.shot      = Shot(self.screen)
+        self.hud       = Hud(self.screen)
+        self.titlemap  = TileMap(self.screen) 
         self.collision = Collision(self.screen)
 
-
-        # pg.display.toggle_fullscreen()
 
         self.mouse_pressed = False
         self.run()
 
     def loop(self):
-
-        
-        # self.screen.fill("black")
-
 
         cooldown_shot = self.shot.get_cooldown()
 
