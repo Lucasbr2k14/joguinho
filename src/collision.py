@@ -8,7 +8,7 @@ class Collision:
     def __init__(self, screen:Surface):
         
         self.screen      = screen
-        self.show_hitbox = True
+        self.show_hitbox = False
         self.scene       = []
 
 
@@ -41,4 +41,3 @@ class Collision:
             
         return tuple(collision)
     
-

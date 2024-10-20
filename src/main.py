@@ -33,6 +33,15 @@ class Game:
 
         cooldown_shot = self.shot.get_cooldown()
 
+
+        # -------- Testes de colisão --------
+
+        self.player.collision = self.collision.test_player(self.player.get_hitbox())
+        
+
+        # -----------------------------------
+
+
         keys = pg.key.get_pressed()
 
         self.player.walking(False)
@@ -80,7 +89,6 @@ class Game:
 
 
         self.titlemap.draw()
-
 
         self.shot.flight()
         self.shot.draw()
