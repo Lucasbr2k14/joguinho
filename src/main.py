@@ -3,10 +3,10 @@ from player import Player
 from shot import Shot
 from hud import Hud
 from titlemap import TileMap
+from enemy import Enemy
+
 
 class Game:
-
-
     def __init__(self):
 
         pg.init()
@@ -21,17 +21,15 @@ class Game:
         self.shot    = Shot(self.screen)
         self.hud     = Hud(self.screen)
         self.titlemap= TileMap(self.screen) 
-        
+        self.enemy   = Enemy(self.screen)
+
+
         # pg.display.toggle_fullscreen()
 
         self.mouse_pressed = False
         self.run()
 
     def loop(self):
-
-        
-        # self.screen.fill("black")
-
         cooldown_shot = self.shot.get_cooldown()
 
         keys = pg.key.get_pressed()
@@ -79,9 +77,11 @@ class Game:
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
 
+        self.enemy.follow_player(self.player.position)
 
         self.titlemap.draw()
 
+        self.enemy.draw()
 
         self.shot.flight()
         self.shot.draw()
@@ -96,9 +96,7 @@ class Game:
         self.time += self.clock.tick(60)
         
 
-    def run(self):
-
-        
+    def run(self):  
         while self.runing:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
