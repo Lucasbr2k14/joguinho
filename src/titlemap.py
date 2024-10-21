@@ -38,7 +38,7 @@ class TileMap:
    
     def generate_surface(self):
    
-        tile_size = self.len*self.scale_factor        
+        tile_size = self.len * self.scale_factor        
         for l in range(len(self.matrix)):
             for c in range(len(self.matrix[0])):
                 x = c * tile_size
@@ -52,3 +52,4 @@ class TileMap:
 
     def draw(self):
         self.screen.blit(self.map_surface, (0,0))
+

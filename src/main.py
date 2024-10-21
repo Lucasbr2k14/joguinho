@@ -7,8 +7,6 @@ from titlemap import TileMap
 from collision import Collision
 
 class Game:
-
-
     def __init__(self):
 
         pg.init()
