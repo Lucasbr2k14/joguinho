@@ -41,7 +41,8 @@ class Game:
 
         # -----------------------------------
 
-
+        # ------------ Teclas ---------------
+        
         keys = pg.key.get_pressed()
 
         self.player.walking(False)
@@ -87,6 +88,7 @@ class Game:
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
 
+        # ---------------------------------
 
         self.titlemap.draw()
 
