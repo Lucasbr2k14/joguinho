@@ -49,7 +49,6 @@ class Player:
         if self.pose >= 4000:
             self.pose = 0
 
-
     def shot(self):
         # Animações tiro
         # Retornar posição inicial do tiro

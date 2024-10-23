@@ -25,6 +25,7 @@ class Game:
 
 
         self.mouse_pressed = False
+        self.configure_collision()
         self.run()
 
     def loop(self):
@@ -93,10 +94,9 @@ class Game:
         self.shot.flight()
         self.shot.draw()
 
-        print(f"{self.player.position}",end="\r")
-
         self.player.draw(self.shot.cooldown)
         self.hud.draw()
+        self.collision.draw_hitbox()
 
         self.hud.recharge_mana()
 
@@ -107,8 +107,6 @@ class Game:
         
 
     def run(self):
-
-        
         while self.runing:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -117,5 +115,8 @@ class Game:
             self.loop()
 
         pg.quit()
+
+    def configure_collision(self):
+        self.collision.get_collision_tilemap(self.titlemap.get_colisions())
 
 Game()
