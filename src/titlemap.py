@@ -1,5 +1,4 @@
 from pygame import Surface, image, Rect, transform
-from time import sleep
 
 class TileMap:
     
@@ -10,6 +9,7 @@ class TileMap:
         self.len          = 16
         self.matrix       = []
         self.tile         = []
+        self.collisions   = []
         self.map_surface = Surface(screen.get_size())
     
         self.load_visuals()
@@ -20,7 +20,6 @@ class TileMap:
     def load_visuals(self):
         self.visuals = image.load_extended("./Sprites/land.png")
         self.visuals = transform.scale(self.visuals, (320*self.scale_factor,320*self.scale_factor))
-    
     
     def load_map(self):
         with open("./maps/map1.csv") as file:
@@ -38,14 +37,17 @@ class TileMap:
             self.tile.append(rect)
    
     def generate_surface(self):
-   
-        tile_size = self.len*self.scale_factor        
+        tile_size = self.len * self.scale_factor        
         for l in range(len(self.matrix)):
             for c in range(len(self.matrix[0])):
                 x = c * tile_size
                 y = l * tile_size
                 index_tile = self.matrix[l][c]
                 self.map_surface.blit(self.visuals, (x, y), self.tile[index_tile])
-   
+    
+    def get_colisions(self) -> list:
+        return [[(268, 200),(754, 624)]]
+
     def draw(self):
         self.screen.blit(self.map_surface, (0,0))
+

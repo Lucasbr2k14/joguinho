@@ -1,10 +1,11 @@
 import pygame as pg
+
 from player import Player
 from shot import Shot
 from hud import Hud
 from titlemap import TileMap
 from enemy import SelectEnemy
-
+from collision import Collision
 
 class Game:
     def __init__(self):
@@ -22,16 +23,28 @@ class Game:
         self.hud     = Hud(self.screen)
         self.titlemap= TileMap(self.screen) 
         self.SelectEnemy = SelectEnemy(self.screen)
-
+        self.collision = Collision(self.screen)
 
         # pg.display.toggle_fullscreen()
 
         self.mouse_pressed = False
+        self.configure_collision()
         self.run()
         self.SelectEnemy.enemySelector(self.player.position)
+        
     def loop(self):
         cooldown_shot = self.shot.get_cooldown()
 
+
+        # -------- Testes de colisão --------
+
+        self.player.collision = self.collision.test_player(self.player.get_hitbox())
+        
+
+        # -----------------------------------
+
+        # ------------ Teclas ---------------
+        
         keys = pg.key.get_pressed()
 
         self.player.walking(False)
@@ -76,6 +89,7 @@ class Game:
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
 
+        # ---------------------------------
 
         self.titlemap.draw()
 
@@ -85,15 +99,17 @@ class Game:
 
         self.player.draw(self.shot.cooldown)
         self.hud.draw()
+        self.collision.draw_hitbox()
 
         self.hud.recharge_mana()
 
+        self.collision.test_player(self.player.get_hitbox())
         pg.display.flip()
 
         self.time += self.clock.tick(60)
         
 
-    def run(self):  
+    def run(self):
         while self.runing:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -102,5 +118,8 @@ class Game:
             self.loop()
 
         pg.quit()
+
+    def configure_collision(self):
+        self.collision.get_collision_tilemap(self.titlemap.get_colisions())
 
 Game()
