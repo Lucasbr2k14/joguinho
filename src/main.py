@@ -3,7 +3,7 @@ from player import Player
 from shot import Shot
 from hud import Hud
 from titlemap import TileMap
-from enemy import Enemy
+from enemy import SelectEnemy
 
 
 class Game:
@@ -21,14 +21,14 @@ class Game:
         self.shot    = Shot(self.screen)
         self.hud     = Hud(self.screen)
         self.titlemap= TileMap(self.screen) 
-        self.enemy   = Enemy(self.screen)
+        self.SelectEnemy = SelectEnemy(self.screen)
 
 
         # pg.display.toggle_fullscreen()
 
         self.mouse_pressed = False
         self.run()
-
+        self.SelectEnemy.enemySelector(self.player.position)
     def loop(self):
         cooldown_shot = self.shot.get_cooldown()
 
@@ -73,16 +73,13 @@ class Game:
         else:
             self.shot.cooldown -= 0.1
 
-
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
 
-        self.enemy.follow_player(self.player.position)
 
         self.titlemap.draw()
 
-        self.enemy.draw()
-
+        self.SelectEnemy.walkingEnemy(self.player.position, self.SelectEnemy.enemyVector)
         self.shot.flight()
         self.shot.draw()
 
