@@ -4,6 +4,7 @@ from player import Player
 from shot import Shot
 from hud import Hud
 from titlemap import TileMap
+from enemy import SelectEnemy
 from collision import Collision
 
 class Game:
@@ -17,19 +18,21 @@ class Game:
         self.time      = 0 
         
         
-        self.player    = Player(self.screen)
-        self.shot      = Shot(self.screen)
-        self.hud       = Hud(self.screen)
-        self.titlemap  = TileMap(self.screen) 
+        self.player  = Player(self.screen)
+        self.shot    = Shot(self.screen)
+        self.hud     = Hud(self.screen)
+        self.titlemap= TileMap(self.screen) 
+        self.SelectEnemy = SelectEnemy(self.screen)
         self.collision = Collision(self.screen)
 
+        # pg.display.toggle_fullscreen()
 
         self.mouse_pressed = False
         self.configure_collision()
         self.run()
-
+        self.SelectEnemy.enemySelector(self.player.position)
+        
     def loop(self):
-
         cooldown_shot = self.shot.get_cooldown()
 
 
@@ -83,7 +86,6 @@ class Game:
         else:
             self.shot.cooldown -= 0.1
 
-
         if not pg.mouse.get_pressed()[0]:
             self.mouse_pressed = False
 
@@ -91,6 +93,7 @@ class Game:
 
         self.titlemap.draw()
 
+        self.SelectEnemy.walkingEnemy(self.player.position, self.SelectEnemy.enemyVector)
         self.shot.flight()
         self.shot.draw()
 
