@@ -7,10 +7,11 @@ class SelectEnemy:
         self.screen = screen
         self.level = 1
         
-        self.spawnPoints = [[random.randrange(1281,1289),random.randrange(-721,723)],
-                       [random.randrange(-1289,-1281),random.randrange(-721,722)],
-                       [random.randrange(-1281,1282),random.randrange(-730,-721)],
-                       [random.randrange(-1281,1282),random.randrange(721,730)]
+        self.spawnPoints = [
+            [random.randrange(1281,1289),random.randrange(-721,723)],
+            [random.randrange(-1289,-1281),random.randrange(-721,722)],
+            [random.randrange(-1281,1282),random.randrange(-730,-721)],
+            [random.randrange(-1281,1282),random.randrange(721,730)]
         ]
 
         print(self.spawnPoints[0])
