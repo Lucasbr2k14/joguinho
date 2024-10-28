@@ -48,41 +48,42 @@ class Game:
         keys = pg.key.get_pressed()
 
         self.player.walking(False)
-        if self.shot.cooldown <= 0:
-            if keys[pg.K_w]:
-                if not keys[pg.K_s]:
-                    self.player.walk_up(cooldown_shot)
-                    self.player.walking(True)
-                
-            if keys[pg.K_s]:
-                if not keys[pg.K_w]:
-                    self.player.walk_down(cooldown_shot)
-                    self.player.walking(True)
+        
+        if keys[pg.K_w]:
+            if not keys[pg.K_s]:
+                self.player.walk_up(cooldown_shot)
+                self.player.walking(True)
+            
+        if keys[pg.K_s]:
+            if not keys[pg.K_w]:
+                self.player.walk_down(cooldown_shot)
+                self.player.walking(True)
 
-            if keys[pg.K_d]:  
-                if not keys[pg.K_a]:
-                    self.player.walk_right(cooldown_shot)
-                    self.player.walking(True)
-                
-            if keys[pg.K_a]:
-                if not keys[pg.K_d]:
-                    self.player.walk_left(cooldown_shot)
-                    self.player.walking(True)
+        if keys[pg.K_d]:  
+            if not keys[pg.K_a]:
+                self.player.walk_right(cooldown_shot)
+                self.player.walking(True)
+            
+        if keys[pg.K_a]:
+            if not keys[pg.K_d]:
+                self.player.walk_left(cooldown_shot)
+                self.player.walking(True)
 
-            if ((keys[pg.K_w] or keys[pg.K_s]) and keys[pg.K_a]) or ((keys[pg.K_w] or keys[pg.K_s]) and keys[pg.K_d]):
-                self.player.velocity = 1.5
-            else:
-                self.player.velocity = 2
+        if ((keys[pg.K_w] or keys[pg.K_s]) and keys[pg.K_a]) or ((keys[pg.K_w] or keys[pg.K_s]) and keys[pg.K_d]):
+            self.player.velocity = 1.5
+        else:
+            self.player.velocity = 2
 
 
         if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
-            if self.hud.return_mana() >= 10:
-                if self.shot.cooldown <= 0:
-                    position_shot = self.player.shot()
-                    self.shot.shot(position_shot, pg.mouse.get_pos(), self.time)
-                    self.mouse_pressed = True
-                    self.shot.cooldown = 3
-                    self.hud.new_mana()
+            
+    
+            position_shot = self.player.shot()
+            self.shot.shot(position_shot, pg.mouse.get_pos(), self.time)
+            self.mouse_pressed = True
+        
+
+
         else:
             self.shot.cooldown -= 0.1
 
@@ -91,6 +92,9 @@ class Game:
 
         # ---------------------------------
 
+        self.player.update()
+
+
         self.titlemap.draw()
 
         self.SelectEnemy.walkingEnemy(self.player.position, self.SelectEnemy.enemyVector)
@@ -98,10 +102,10 @@ class Game:
         self.shot.draw()
 
         self.player.draw(self.shot.cooldown)
+        self.hud.pull_from_player(self.player.get_hud())
         self.hud.draw()
         self.collision.draw_hitbox()
 
-        self.hud.recharge_mana()
 
         self.collision.test_player(self.player.get_hitbox())
         pg.display.flip()

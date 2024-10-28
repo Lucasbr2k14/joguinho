@@ -18,7 +18,7 @@ class Shot:
 
     def shot(self, player_pos:tuple, mouse_pos:tuple, time: int):
 
-        if self.get_cooldown():
+        if len(player_pos) == 2:
         
             self.next_shot = time + self.cooldown_time
 
