@@ -76,8 +76,6 @@ class Game:
 
 
         if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
-            
-    
             position_shot = self.player.shot()
             self.shot.shot(position_shot, pg.mouse.get_pos(), self.time)
             self.mouse_pressed = True
@@ -101,7 +99,7 @@ class Game:
         self.shot.flight()
         self.shot.draw()
 
-        self.player.draw(self.shot.cooldown)
+        self.player.draw()
         self.hud.pull_from_player(self.player.get_hud())
         self.hud.draw()
         self.collision.draw_hitbox()
