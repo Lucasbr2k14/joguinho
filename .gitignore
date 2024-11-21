@@ -2,6 +2,7 @@ Include
 Lib
 Scripts
 src/__pycache__
+src/sprites/__pycache__
 pyvenv.cfg
 
 bin

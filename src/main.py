@@ -1,11 +1,12 @@
 import pygame as pg
 
-from player import Player
+from sprites.player import Player
 from shot import Shot
 from hud import Hud
 from titlemap import TileMap
 from enemy import SelectEnemy
 from collision import Collision
+
 
 class Game:
     def __init__(self):
@@ -32,7 +33,7 @@ class Game:
         self.run()
         self.SelectEnemy.enemySelector(self.player.position)
         
-    def loop(self):
+    def game_loop(self):
         cooldown_shot = self.shot.get_cooldown()
 
 
@@ -79,8 +80,6 @@ class Game:
             position_shot = self.player.shot()
             self.shot.shot(position_shot, pg.mouse.get_pos(), self.time)
             self.mouse_pressed = True
-        
-
 
         else:
             self.shot.cooldown -= 0.1
@@ -117,7 +116,7 @@ class Game:
                 if event.type == pg.QUIT:
                     self.runing = False
 
-            self.loop()
+            self.game_loop()
 
         pg.quit()
 
